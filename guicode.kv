@@ -1,0 +1,562 @@
+# File = guicode.kv
+
+Wmanager:
+    Startscreen:
+    Mainscreen:
+    Story_Mainscreen:
+    Story_Addscreen:
+    Story_Show_Change_Screen:
+    Character_Mainscreen:
+    Character_Addscreen:
+    Character_Show_Change_Screen:
+
+<Special@Button>:
+    height: dp(30)
+    background_color: 1,1,1,0.05
+    font_size: dp(20)
+
+
+<Startscreen>:
+    name: "startscreen"
+    FloatLayout:
+        orientation: "vertical"
+        canvas.before:
+            # Hintergrund setzen
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: './Bilder/Bild3.png'
+        Label:
+            text: "Pen und Paper"
+            background_color: 0,0,0,0
+            foreground_color: 1,1,1,1
+            font_size: dp(40)
+            size_hint: 1, 0.15
+            pos_hint: {"x": 0,"top": .98}
+        
+        Button:
+            id: starten
+            background_color: 0,0,0,0
+            foreground_color: 0,0,0,0
+            background_normal: './Bilder/Bild5.png'
+            height: dp(80)
+            size_hint: 1,1
+            on_release:
+                root.starten()
+                root.manager.transition.direction = "left"
+
+<Mainscreen>:
+    name: "mainscreen"
+    BoxLayout:
+        orientation: "vertical"
+        canvas.before:
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: './Bilder/Bild5.png'
+        Label:
+            text: " Auswahl-Menü"
+            font_size: dp(40)
+            size_hint_y: None
+
+        
+        Button:
+            id: zurueck_start
+            text: "Zurück"
+            size_hint_y: None
+            height: dp(80)
+            font_size: dp(30)
+            background_color: 1,1,1,0.05
+            on_release:
+                app.root.current = "startscreen" 
+                root.manager.transition.direction = "right"
+
+        GridLayout:
+            cols: 2
+
+            Button:
+                id: story_menu_enter
+                text: "Story"
+                font_size: dp(30)
+                background_color: 1,1,1,0.05
+                col: 1
+                on_release:
+                    app.root.current = "storyMainscreen" 
+                    root.manager.transition.direction = "left"
+
+            Button:
+                id: character_menu_enter
+                text: "Datenbank"
+                font_size: dp(30)
+                col: 2
+                background_color: 1,1,1,0.05
+                on_release:
+                    app.root.current = "characterMainscreen" 
+                    root.manager.transition.direction = "left"
+
+<Story_Mainscreen>:
+    name: "storyMainscreen"
+    story_rv: story_rv
+    BoxLayout:
+        orientation: "vertical"
+        canvas.before:
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: './Bilder/Bild6.png'
+        Label:
+            text: "Story-Menü"
+            font_size: dp(40)
+            size_hint_y: None
+
+        GridLayout:
+            size_hint_x: 1
+            size_hint_y: 0.3
+            cols: 1
+            rows: 3
+                
+            Button:
+                text: "Zurück"
+                height: dp(80)
+                font_size: dp(30)
+                col: 1
+                row: 1
+                background_color: 1,1,1,0.05
+                on_release:
+                    app.root.current = "mainscreen" 
+                    root.manager.transition.direction = "right"
+            
+            Button:
+                text: "Neue Story hinzufügen"
+                height: dp(80)
+                font_size: dp(30)
+                col: 1
+                row: 2
+                background_color: 1,1,1,0.05
+                on_release:
+                    app.root.current = "storyaddscreen" 
+                    root.manager.transition.direction = "left"
+
+            Button:
+                text: "Daten vorbereiten"
+                height: dp(80)
+                font_size: dp(30)
+                col: 1
+                row: 3
+                background_color: 1,1,1,0.05
+                on_release:
+                    app.root.current = "storyshowchangescreen" 
+                    root.manager.transition.direction = "left"
+        
+        BoxLayout:
+            orientation: "vertical"
+            Story_RV:
+                id: story_rv
+                viewclass: "Special"
+                RecycleBoxLayout:
+                    default_size: None, 100
+                    default_size_hint: 1, None
+                    size_hint_y: None
+                    height: self.minimum_height
+                    orientation: "vertical"
+                    font_size: dp(20)
+
+<Story_Addscreen>:
+    name: "storyaddscreen"
+    FloatLayout:
+        orientation: "vertical"
+        canvas.before:
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: './Bilder/Bild8.png'
+        
+            
+        GridLayout:
+            size_hint_x: 1
+            size_hint_y: 0.1
+            pos_hint: {"top": 1}
+            cols: 2
+            
+            Label:
+                text: "Titel:"
+                font_size: dp(40)
+                background_color: 1,1,1,0.05
+                cols: 1
+                
+            TextInput:
+                id: titel_story
+                font_size: dp(40)
+                multiline: False
+                cols: 2
+                background_color: 1,1,1,0.05
+                foreground_color: 1,1,1,1
+
+        GridLayout:
+            size_hint_x: 0.9
+            size_hint_y: 0.2
+            pos_hint: {"x": 0.05, "top": 0.85}
+            cols: 1
+            rows: 2
+                
+            Button:
+                id: zurueck_storyscreen
+                text: "Abbrechen"
+                height: dp(80)
+                font_size: dp(30)
+                col: 1
+                row: 0
+                background_color: 1,1,1,0.05
+                on_release:
+                    app.root.current = "storyMainscreen" 
+                    root.manager.transition.direction = "right"
+                
+            Button:
+                id: zurueck_storyscreen
+                text: "Bestätigen"
+                height: dp(80)
+                font_size: dp(30)
+                col: 1
+                row: 1
+                background_color: 1,1,1,0.05
+                on_release:
+                    root.add()
+                    app.root.current = "storyMainscreen" 
+                    root.manager.transition.direction = "right"
+            
+        TextInput:
+            id: story_inhalt
+            multiline: True
+            background_color: 1,1,1,0.05
+            foreground_color: 1,1,1,1
+            pos_hint: {"x": 0.05, "top": 0.60}
+            size_hint_x: 0.9
+            size_hint_y: 0.55
+           
+<Story_Show_Change_Screen>:
+    name: "storyshowchangescreen"
+    FloatLayout:
+        orientation: "vertical"
+        canvas.before:
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: './Bilder/Bild8.png'
+        
+            
+        GridLayout:
+            size_hint_x: 1
+            size_hint_y: 0.1
+            pos_hint: {"top": 1}
+            cols: 2
+            
+            Label:
+                text: "Titel:"
+                font_size: dp(40)
+                background_color: 1,1,1,0.05
+                cols: 1
+                
+            Label:
+                id: story_titel_show
+                font_size: dp(40)
+                text: ""
+                multiline: False
+                cols: 2
+                background_color: 1,1,1,0.05
+                foreground_color: 1,1,1,1
+
+        GridLayout:
+            size_hint_x: 0.9
+            size_hint_y: 0.2
+            pos_hint: {"x": 0.05, "top": 0.85}
+            cols: 1
+            rows: 4
+                
+            Button:
+                text: "Zurück"
+                height: dp(80)
+                font_size: dp(30)
+                col: 1
+                row: 0
+                background_color: 1,1,1,0.05
+                on_release:
+                    root.back()
+                    app.root.current = "storyMainscreen" 
+                    root.manager.transition.direction = "right"
+
+            Button:
+                text: "Daten laden"
+                height: dp(80)
+                font_size: dp(30)
+                col: 1
+                row: 1
+                background_color: 1,1,1,0.05
+                on_release: 
+                    root.data_loading()
+                
+            Button:
+                text: "Bestätigen"
+                height: dp(80)
+                font_size: dp(30)
+                col: 1
+                row: 2
+                background_color: 1,1,1,0.05
+                on_release:
+                    root.save_change()
+                    app.root.current = "storyMainscreen" 
+                    root.manager.transition.direction = "right"
+
+            Button:
+                text: "Löschen"
+                height: dp(80)
+                font_size: dp(30)
+                col: 1
+                row: 3
+                background_color: 1,1,1,0.05
+                on_release:
+                    root.delete()
+                    app.root.current = "storyMainscreen" 
+                    root.manager.transition.direction = "right"
+            
+        TextInput:
+            id: story_inhalt
+            multiline: True
+            background_color: 1,1,1,0.05
+            foreground_color: 1,1,1,1
+            pos_hint: {"x": 0.05, "top": 0.60}
+            size_hint_x: 0.9
+            size_hint_y: 0.55
+
+<Character_Mainscreen>:
+    name: "characterMainscreen"
+    character_rv: character_rv
+    BoxLayout:
+        orientation: "vertical"
+        canvas.before:
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: './Bilder/Bild6.png'
+        Label:
+            text: "Charakter-Menü"
+            font_size: dp(40)
+            size_hint_y: None
+
+        GridLayout:
+            size_hint_x: 1
+            size_hint_y: 0.3
+            cols: 1
+            rows: 3
+                
+            Button:
+                text: "Zurück"
+                height: dp(80)
+                font_size: dp(30)
+                col: 1
+                row: 1
+                background_color: 1,1,1,0.05
+                on_release:
+                    app.root.current = "mainscreen" 
+                    root.manager.transition.direction = "right"
+            
+            Button:
+                text: "Neuen Charakter hinzufügen"
+                height: dp(80)
+                font_size: dp(30)
+                col: 1
+                row: 2
+                background_color: 1,1,1,0.05
+                on_release:
+                    app.root.current = "characteraddscreen" 
+                    root.manager.transition.direction = "left"
+
+            Button:
+                text: "Daten vorbereiten"
+                height: dp(80)
+                font_size: dp(30)
+                col: 1
+                row: 3
+                background_color: 1,1,1,0.05
+                on_release:
+                    app.root.current = "charactershowchangescreen" 
+                    root.manager.transition.direction = "left"
+        
+        BoxLayout:
+            orientation: "vertical"
+            Character_RV:
+                id: character_rv
+                viewclass: "Special"
+                RecycleBoxLayout:
+                    default_size: None, 100
+                    default_size_hint: 1, None
+                    size_hint_y: None
+                    height: self.minimum_height
+                    orientation: "vertical"
+                    font_size: dp(20)
+
+<Character_Addscreen>:
+    name: "characteraddscreen"
+    FloatLayout:
+        orientation: "vertical"
+        canvas.before:
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: './Bilder/Bild8.png'
+        
+        GridLayout:
+            size_hint_x: 1
+            size_hint_y: 0.1
+            pos_hint: {"top": 1}
+            cols: 2
+            
+            Label:
+                text: "Titel:"
+                font_size: dp(40)
+                background_color: 1,1,1,0.05
+                cols: 1
+                
+            TextInput:
+                id: character_titel
+                font_size: dp(40)
+                multiline: False
+                cols: 2
+                background_color: 1,1,1,0.05
+                foreground_color: 1,1,1,1
+
+        GridLayout:
+            size_hint_x: 0.9
+            size_hint_y: 0.2
+            pos_hint: {"x": 0.05, "top": 0.85}
+            cols: 1
+            rows: 2
+                
+            Button:
+                id: zurueck_characterscreen
+                text: "Abbrechen"
+                height: dp(80)
+                font_size: dp(30)
+                col: 1
+                row: 0
+                background_color: 1,1,1,0.05
+                on_release:
+                    app.root.current = "characterMainscreen" 
+                    root.manager.transition.direction = "right"
+                
+            Button:
+                id: enter_characterscreen-
+                text: "Bestätigen"
+                height: dp(80)
+                font_size: dp(30)
+                col: 1
+                row: 1
+                background_color: 1,1,1,0.05
+                on_release:
+                    root.add()
+                    app.root.current = "characterMainscreen" 
+                    root.manager.transition.direction = "right"
+            
+        TextInput:
+            id: character_inhalt
+            multiline: True
+            background_color: 1,1,1,0.05
+            foreground_color: 1,1,1,1
+            pos_hint: {"x": 0.05, "top": 0.60}
+            size_hint_x: 0.9
+            size_hint_y: 0.55
+
+<Character_Show_Change_Screen>:
+    name: "charactershowchangescreen"
+
+    FloatLayout:
+        orientation: "vertical"
+        canvas.before:
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: './Bilder/Bild8.png'
+        
+            
+        GridLayout:
+            size_hint_x: 1
+            size_hint_y: 0.1
+            pos_hint: {"top": 1}
+            cols: 2
+            
+            Label:
+                text: "Titel:"
+                font_size: dp(40)
+                background_color: 1,1,1,0.05
+                cols: 1
+                
+            Label:
+                id: character_titel_show
+                font_size: dp(40)
+                text: ""
+                multiline: False
+                cols: 2
+                background_color: 1,1,1,0.05
+                foreground_color: 1,1,1,1
+
+        GridLayout:
+            size_hint_x: 0.9
+            size_hint_y: 0.2
+            pos_hint: {"x": 0.05, "top": 0.85}
+            cols: 1
+            rows: 4
+                
+            Button:
+                id: zurueck_main_ch
+                text: "Zurück"
+                height: dp(80)
+                font_size: dp(30)
+                col: 1
+                row: 0
+                background_color: 1,1,1,0.05
+                on_release:
+                    root.back()
+                    app.root.current = "characterMainscreen" 
+                    root.manager.transition.direction = "right"
+
+            Button:
+                text: "Daten laden"
+                height: dp(80)
+                font_size: dp(30)
+                col: 1
+                row: 1
+                background_color: 1,1,1,0.05
+                on_release: 
+                    root.data_loading()
+                
+            Button:
+                text: "Bestätigen"
+                height: dp(80)
+                font_size: dp(30)
+                col: 1
+                row: 2
+                background_color: 1,1,1,0.05
+                on_release:
+                    root.save_change()
+                    app.root.current = "characterMainscreen" 
+                    root.manager.transition.direction = "right"
+
+            Button:
+                text: "Löschen"
+                height: dp(80)
+                font_size: dp(30)
+                col: 1
+                row: 3
+                background_color: 1,1,1,0.05
+                on_release:
+                    root.delete()
+                    app.root.current = "characterMainscreen" 
+                    root.manager.transition.direction = "right"
+            
+        TextInput:
+            id: character_inhalt
+            multiline: True
+            background_color: 1,1,1,0.05
+            foreground_color: 1,1,1,1
+            pos_hint: {"x": 0.05, "top": 0.60}
+            size_hint_x: 0.9
+            size_hint_y: 0.55
